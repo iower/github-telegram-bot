@@ -31,6 +31,7 @@ const process = async () => {
 
     if (fetchedCommits?.message?.includes('limit exceeded')) {
       console.error(fetchedCommits.message);
+      return;
     }
 
     // read
