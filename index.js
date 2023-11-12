@@ -1,5 +1,3 @@
-const IS_DEBUG = true;
-
 console.log((new Date()).toISOString(), 'Launch github-telegram-bot...');
 
 const fs = require('fs');
@@ -90,11 +88,11 @@ const sendCommitSummary = (commit) => {
   ].join('\n')
 
   return bot.sendMessage(
-    IS_DEBUG ? config.TELEGRAM_OWNER_ID : config.TELEGRAM_CHAT_ID,
+    config.IS_DEBUG ? config.TELEGRAM_OWNER_ID : config.TELEGRAM_CHAT_ID,
     message,
     {
       reply_to_message_id:
-        (!IS_DEBUG && Boolean(config.TELEGRAM_TOPIC_ID))
+        (!config.IS_DEBUG && Boolean(config.TELEGRAM_TOPIC_ID))
           ? config.TELEGRAM_TOPIC_ID
           : undefined,
       parse_mode : 'HTML',

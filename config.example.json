@@ -5,5 +5,6 @@
   "TELEGRAM_TOPIC_ID": "...",
   "GITHUB_REPO_OWNER_NAME": "iower",
   "GITHUB_REPO_NAME": "github-telegram-bot",
-  "UPDATE_INTERVAL_SEC": 66
+  "UPDATE_INTERVAL_SEC": 66,
+  "IS_DEBUG": false
 }
