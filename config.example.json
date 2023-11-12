@@ -3,5 +3,6 @@
   "TELEGRAM_OWNER_ID": "...",
   "TELEGRAM_CHAT_ID": "...",
   "TELEGRAM_TOPIC_ID": "...",
-  "GITHUB_REPO_URL": "https://github.com/iower/github-telegram-bot"
+  "GITHUB_REPO_OWNER_NAME": "iower",
+  "GITHUB_REPO_NAME": "github-telegram-bot"
 }

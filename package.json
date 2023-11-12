@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/iower/github-telegram-bot#readme",
   "dependencies": {
+    "node-fetch": "^2.7.0",
     "node-telegram-bot-api": "^0.64.0"
   }
 }
