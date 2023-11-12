@@ -39,25 +39,34 @@ const process = async () => {
   }
 
   const newCommits = [];
-  for (let i = 0; i < fetchedCommits; i++) {
+  for (let i = 0; i < fetchedCommits.length; i++) {
     const fetchedCommit = fetchedCommits[i];
-    if (!savedCommits.find(savedCommit => savedCommit.sha === fetchedCommit.sha)) {
+    console.log('fetchedCommit.sha', fetchedCommit.sha)
+    if (savedCommits.find(savedCommit => savedCommit.sha === fetchedCommit.sha)) {
+      break;
+    } else {
       newCommits.push(fetchedCommit);
     }
   };
 
+  console.log('fetchedCommits.length', fetchedCommits.length)
+  console.log('savedCommits.length', savedCommits.length)
+
   if (newCommits.length) {
     console.log(`New commits! (${newCommits.length})`);
-    saveCommits(fetchedCommits);
-    for (let i = 0; i < newCommits; i++) {
+    for (let i = 0; i < newCommits.length; i++) {
       const newCommit = newCommits[i];
       await sendCommitSummary(newCommit);
     }
+    saveCommits(fetchedCommits);
   } else {
     console.log('No new commits');
   }
 }
-process();
+
+setInterval(() => {
+  process();
+}, config.UPDATE_INTERVAL_SEC * 1000);
 
 const saveCommits = (commits) => {
   console.log(`Save commits to ${savedCommitsFilePath}`);
