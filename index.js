@@ -24,43 +24,45 @@ const savedCommitsFileName = `saved-commits-${config.GITHUB_REPO_OWNER_NAME}-${c
 const savedCommitsFilePath = `./${savedCommitsFileName}.json`;
 
 const process = async () => {
-  const url = `https://api.github.com/repos/${config.GITHUB_REPO_OWNER_NAME}/${config.GITHUB_REPO_NAME}/commits`;
-  const response = await fetch(url);
-  const fetchedCommits = await response.json();
-
-  // read
-  let savedCommits;
   try {
-    savedCommits = JSON.parse(fs.readFileSync(savedCommitsFilePath, 'utf8'))
-  } catch (e) {
-    console.info(`Will be created: ${savedCommitsFilePath}`);
-    saveCommits(fetchedCommits)
-    return;
-  }
+    const url = `https://api.github.com/repos/${config.GITHUB_REPO_OWNER_NAME}/${config.GITHUB_REPO_NAME}/commits`;
+    const response = await fetch(url);
+    const fetchedCommits = await response.json();
 
-  const newCommits = [];
-  for (let i = 0; i < fetchedCommits.length; i++) {
-    const fetchedCommit = fetchedCommits[i];
-    console.log('fetchedCommit.sha', fetchedCommit.sha)
-    if (savedCommits.find(savedCommit => savedCommit.sha === fetchedCommit.sha)) {
-      break;
-    } else {
-      newCommits.push(fetchedCommit);
+    if (fetchedCommits?.message?.includes('limit exceeded')) {
+      console.error(fetchedCommits.message);
     }
-  };
 
-  console.log('fetchedCommits.length', fetchedCommits.length)
-  console.log('savedCommits.length', savedCommits.length)
-
-  if (newCommits.length) {
-    console.log(`New commits! (${newCommits.length})`);
-    for (let i = 0; i < newCommits.length; i++) {
-      const newCommit = newCommits[i];
-      await sendCommitSummary(newCommit);
+    // read
+    let savedCommits;
+    try {
+      savedCommits = JSON.parse(fs.readFileSync(savedCommitsFilePath, 'utf8'))
+    } catch (e) {
+      console.info(`Will be created: ${savedCommitsFilePath}`);
+      saveCommits(fetchedCommits)
+      return;
     }
-    saveCommits(fetchedCommits);
-  } else {
-    console.log('No new commits');
+
+    const newCommits = [];
+    for (let i = 0; i < fetchedCommits.length; i++) {
+      const fetchedCommit = fetchedCommits[i];
+      if (savedCommits.find(savedCommit => savedCommit.sha === fetchedCommit.sha)) {
+        break;
+      } else {
+        newCommits.push(fetchedCommit);
+      }
+    };
+
+    if (newCommits.length) {
+      console.log(`New commits! (${newCommits.length})`);
+      for (let i = 0; i < newCommits.length; i++) {
+        const newCommit = newCommits[i];
+        await sendCommitSummary(newCommit);
+      }
+      saveCommits(fetchedCommits);
+    }
+  } catch (err) {
+    console.error('process err |', err);
   }
 }
 
