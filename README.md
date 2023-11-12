@@ -7,8 +7,9 @@ Notify about GitHub commits in Telegram
 ## Installation
 > npm i
 
-## Settings
+## Config
 > mv config.example.json config.json
+
 And edit `config.json`
 
 ## Run

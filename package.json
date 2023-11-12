@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/iower/github-telegram-bot/issues"
   },
-  "homepage": "https://github.com/iower/github-telegram-bot#readme"
+  "homepage": "https://github.com/iower/github-telegram-bot#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.64.0"
+  }
 }
