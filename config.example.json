@@ -1,0 +1,5 @@
+{
+  "TELEGRAM_BOT_TOKEN": "...",
+  "TELEGRAM_OWNER_ID": "123...",
+  "GITHUB_REPO_URL": "https://github.com/iower/github-telegram-bot"
+}

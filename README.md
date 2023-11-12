@@ -8,7 +8,8 @@ Notify about GitHub commits in Telegram
 > npm i
 
 ## Settings
-...
+> mv config.example.json config.json
+And edit `config.json`
 
 ## Run
 > npm run bot
