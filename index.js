@@ -31,7 +31,7 @@ const process = async () => {
   // read
   let savedCommits;
   try {
-    savedCommits = require(savedCommitsFilePath);
+    savedCommits = JSON.parse(fs.readFileSync(savedCommitsFilePath, 'utf8'))
   } catch (e) {
     console.info(`Will be created: ${savedCommitsFilePath}`);
     saveCommits(fetchedCommits)
@@ -64,6 +64,7 @@ const process = async () => {
   }
 }
 
+process();
 setInterval(() => {
   process();
 }, config.UPDATE_INTERVAL_SEC * 1000);
