@@ -8,8 +8,8 @@ const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(config.TELEGRAM_BOT_TOKEN, {polling: true});
 
 bot.on('message', (msg) => {
+  console.log('message', msg)
   const chatId = msg.chat.id;
-  console.log('message from chat', chatId)
   if (chatId == config.TELEGRAM_OWNER_ID) {
     bot.sendMessage(chatId, 'Up!');
   }
@@ -17,3 +17,13 @@ bot.on('message', (msg) => {
 
 bot.sendMessage(config.TELEGRAM_OWNER_ID, 'Launched!');
 console.log('Launched!');
+
+const message = 'Hello world'
+
+bot.sendMessage(
+  config.TELEGRAM_CHAT_ID,
+  message,
+  config.TELEGRAM_TOPIC_ID
+    ? { reply_to_message_id: config.TELEGRAM_TOPIC_ID }
+    : undefined
+);
